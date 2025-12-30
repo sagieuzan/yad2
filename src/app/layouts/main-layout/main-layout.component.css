@@ -1,0 +1,16 @@
+.layout-content {
+  padding-top: var(--header-height);
+}
+:host {
+  --header-height: 64px;
+}
+@media (max-width: 1110px) {
+  :host {
+    --header-height: 112px;
+  }
+}
+@media (max-width: 881px) {
+  :host {
+    --header-height: 60px;
+  }
+}

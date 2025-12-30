@@ -1,0 +1,506 @@
+:host {
+  display: block;
+  font-family: 'Rubik', system-ui, sans-serif;
+  direction: rtl;
+    top: 0;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header-container {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  padding: 0 16px;
+  width: 100%;
+}
+
+/* ================= TOP ROW ================= */
+.top-row {
+  display: flex;
+  align-items: center; /* מוודא שהכל מיושר לאמצע */
+  justify-content: space-between;
+  height: 64px; /* גובה קבוע להדר */
+  gap: 16px;
+}
+
+/* Right Section */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%; /* חשוב! יורש את ה-64px */
+  flex: 1;
+}
+
+.logo {
+  height: 30px;
+  width: auto;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Navigation Categories */
+.nav-categories {
+  display: flex;
+  height: 100%; /* מתיחה לגובה המלא */
+  gap: 0; /* מרווח 0 כי הפאדינג בתוך הלינקים יעשה את הריווח */
+}
+
+/* Nav Item Wrapper (כדי לאפשר HOVER מלא) */
+.nav-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* בשביל המיקום של התפריט הנפתח */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #363636;
+  font-size: 15px;
+  font-weight: 400;
+  
+  /* הטריק לגובה מלא ורקע */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 12px; /* הריווח הפנימי שיוצר את ה"כפתור" */
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent; /* הכנה לקו תחתון אם רוצים בעתיד */
+  
+  &:hover {
+    background-color: #f3f3f3; /* הצבע האפרפר */
+  }
+}
+
+/* ================= DROPDOWN MENU (YAD2 STYLE) ================= */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 64px; /* מתחיל בדיוק מתחת להדר */
+  right: -50px; /* הזזה ימינה כדי למרכז מתחת ל"נדלן" כמו באתר המקורי */
+  width: 290px; /* רוחב מדויק יותר */
+  background: #fff;
+  box-shadow: 0 9px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 8px 8px; /* פינות עגולות רק למטה */
+  z-index: 9999;
+  padding: 8px 0;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* הצגת התפריט בריחוף - נשאר אותו דבר */
+.dropdown-group:hover .dropdown-menu {
+  display: block;
+}
+/* צבע רקע ללשונית למעלה כשהתפריט פתוח */
+.dropdown-group:hover .nav-link {
+  background-color: #f3f3f3;
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- עיצוב הלינקים ברשימה --- */
+.dropdown-list li a {
+  display: flex;
+  justify-content: space-between; /* טקסט בימין, אייקון בשמאל */
+  align-items: center;
+  padding: 11px 24px; /* ריווח פנימי מרווח */
+  text-decoration: none;
+  color: #363636; /* צבע טקסט כהה */
+  font-size: 16px; /* גודל פונט קריא */
+  font-weight: 400;
+  transition: background-color 0.1s;
+  line-height: 1.2;
+}
+
+.dropdown-list li a:hover {
+  background-color: #f9f9f9;
+  color: #ff7100; /* טקסט כתום בהובר */
+}
+
+/* --- האייקונים בצד שמאל --- */
+.dd-icon {
+  width: 22px;
+  height: 22px;
+  color: #999; /* אפור לאייקונים רגילים */
+  stroke-width: 1.5px;
+}
+/* בהובר על השורה, האייקון נצבע בכתום */
+.dropdown-list li a:hover .dd-icon {
+  color: #ff7100;
+}
+
+
+/* ================= SPECIAL ROWS (Yad1 & Yadata) ================= */
+
+/* --- שורה מיוחדת: יד1 דירות חדשות --- */
+/* השורה הזו באתר ממוקמת בדרך כלל ראשונה, כאן שמתי אותה לפי הרשימה שלך */
+.yad1-row a {
+  background-color: #fff9f2; /* רקע כתמתם/קרם בהיר מאוד */
+}
+
+.yad1-row a .dd-text {
+  color: #0076e3; /* הכחול של יד1 */
+  font-weight: 500;
+}
+
+.yad1-row .dd-icon {
+  color: #0076e3; /* גם האייקון כחול */
+}
+
+.yad1-row a:hover {
+  background-color: #fff0e0; /* רקע קצת יותר כהה בהובר */
+}
+
+
+/* --- שורה מיוחדת: ידאטה (עם התגית "חדש") --- */
+.text-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* רווח בין הטקסט לתגית */
+}
+
+.badge-new {
+  background-color: #00c66c; /* הירוק של יד2 */
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+/* הצגת התפריט בעת ריחוף על ה-Wrapper */
+.dropdown-group:hover .dropdown-menu {
+  display: block;
+}
+
+/* שמירה על צבע הלינק הראשי כשהתפריט פתוח */
+.dropdown-group:hover .nav-link {
+  background-color: #f3f3f3;
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-list li a {
+  display: flex;
+  justify-content: space-between; /* טקסט בימין, אייקון בשמאל */
+  align-items: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #363636;
+  font-size: 15px;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}
+
+.dd-icon {
+  font-size: 16px;
+  color: #999;
+}
+
+.row-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.highlight-row {
+  background-color: #fffaf5; 
+
+}
+.badge-new {
+  background-color: #00c853;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.dropdown-menu {
+  width: auto;
+  min-width: 560px;
+  max-width: min(960px, 100vw - 32px);
+  padding: 12px 8px;
+}
+
+.dropdown-list {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  direction: rtl;
+}
+
+.dropdown-list li {
+  height: 100%;
+}
+
+.dropdown-list li a {
+  height: 100%;
+  padding: 11px 24px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  transition: background-color 0.1s;
+}
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  direction: rtl;
+    height: 100%;
+
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #363636;
+  font-size: 14px;
+  padding: 0 10px;
+  height: 100%;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.icon {
+  font-size: 30px;
+  width: 36px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+.svg{
+  width: 24px;
+  height: 24px;
+}
+
+.fav-btn .label-desktop {
+  display: none;
+  @media (min-width: 1400px) {
+    display: inline;
+  }
+}
+
+.post-btn {
+  background-color: #fff;
+  border: 1px solid #ff7100;
+  color: #ff7100;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #fff0e6;
+  }
+
+  .plus {
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+.circle-badge {
+  background-color: #d2d2d28d;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 50%;
+  border:#b4b4b48d solid 1px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bottom-row {
+  display: none; 
+  padding-bottom: 12px;
+  justify-content: flex-end; 
+  direction: ltr;
+}
+.dropped-item { display: none; }
+
+@media (max-width: 1350px) {
+  .chat-label { display: none; }
+}
+@media (max-width: 1260px) {
+  .top-actions .login-btn .text-label { display: none; }
+}
+
+@media (max-width: 1170px) {
+  .bottom-row { display: flex; }
+  .top-actions .post-btn { display: none; }
+  .bottom-actions .item-post { display: flex; }
+}
+
+@media (max-width: 1030px) {
+  .top-actions .login-btn { display: none; }
+  .bottom-actions .item-login { display: flex; }
+}
+
+@media (max-width: 955px) {
+  .top-actions { display: none; }
+  .bottom-actions .item-fav,
+  .bottom-actions .item-chat { display: flex; }
+}
+
+
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    min-width: auto;
+    max-width: none;
+    width: calc(100vw - 32px);
+    right: 16px;
+    left: 16px;
+  }
+
+  .dropdown-list {
+    display: flex;
+    flex-direction: column;
+    column-gap: 0;
+    row-gap: 0;
+  }
+}
+
+.mobile-header {
+  display: none; /* ברירת מחדל מוסתר בדסקטופ */
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; /* גובה סטנדרטי למובייל */
+  width: 100%;
+  background-color: #fff;
+}
+
+/* קבוצה ימנית: המבורגר ולוגו */
+.mobile-right {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* רווח בין המבורגר ללוגו */
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-logo {
+  height: 26px; /* גודל לוגו מותאם למובייל */
+  width: auto;
+}
+
+/* קבוצה שמאלית: אייקונים */
+.mobile-left {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse; /* טריק: הופך את הסדר כך שהפרופיל יהיה הכי משמאל */
+  gap: 20px; /* רווח בין האייקונים */
+}
+
+.mobile-icon-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* עיצוב ספציפי לאייקונים לפי התמונה */
+
+/* 1. פרופיל - סגול מלא */
+.profile-icon {
+  color: #433468; /* הצבע הסגול הכהה של יד2 */
+  width: 26px;
+  height: 26px;
+}
+
+/* 2. לב - קו מתאר כהה */
+.heart-icon {
+  color: #002f48; /* כחול כהה/שחור */
+  stroke-width: 1.8px;
+  height: 60px;
+  padding: 0 10px;
+  min-width: 40px;
+}
+.heart-icon:hover {
+background-color: #f3f3f3;
+cursor: pointer;
+}
+
+/* 3. צ'אט - עם מספר */
+.chat-group {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* רווח בין המספר לאייקון */
+}
+
+.chat-icon {
+  color: #002f48;
+  transform: scaleX(-1); /* הופך את בועת הדיבור שתתאים לכיוון העברית */
+ height: 60px;
+  padding: 0 10px;
+  min-width: 45px;
+}
+.chat-icon:hover {
+background-color: #f3f3f3;
+cursor: pointer;
+}
+
+.counter {
+  font-size: 16px;
+  color: #002f48;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* Breakpoint Logic */
+@media (max-width: 881px) {
+  .header-container{
+    padding: 0;
+    padding-right: 20px;
+  }
+  .desktop-layout {
+    display: none !important;
+  }
+  .mobile-header {
+    display: flex;
+  }
+  
+}

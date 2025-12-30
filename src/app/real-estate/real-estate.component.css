@@ -1,0 +1,221 @@
+:host {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  display: block;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  --topbar-height: 70px;
+  --stacked-offset: calc(var(--header-height, 64px) + var(--topbar-height));
+  --map-width: 50vw;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: var(--topbar-height);
+}
+
+
+/* --- Main Layout --- */
+.content-wrapper {
+  display: block;
+  flex: 1;
+  position: relative;
+  padding-left: var(--map-width);
+  padding-right: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- Listings (Right Side) --- */
+.listings-panel {
+  width: 100%;
+  max-width: calc(100vw - var(--map-width));
+  padding: 20px;
+  background: #fff;
+  z-index: 1;
+  box-sizing: border-box;
+  /* natural page scrolling, no overflow here */
+}
+
+.listings-header h1 { font-size: 24px; margin-bottom: 5px; }
+.listings-header .subtitle { color: #777; font-size: 14px; }
+
+/* Property Card Styles */
+.property-card {
+  display: flex;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 160px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  background: #fff;
+}
+
+.property-card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.card-image { width: 220px; position: relative; }
+.card-image img { width: 100%; height: 100%; object-fit: cover; }
+.tag-new { position: absolute; top: 10px; right: 10px; background: #0073e6; color: #fff; padding: 2px 8px; font-size: 12px; border-radius: 4px; }
+.card-details { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.address-row .street { font-weight: bold; font-size: 18px; }
+.city-row { color: #666; font-size: 14px; }
+.specs-row { display: flex; gap: 15px; font-size: 13px; color: #333; }
+.spec-item { display: flex; flex-direction: column; align-items: center; }
+.price-row { font-size: 20px; font-weight: bold; color: #333; margin-top: auto; }
+
+.map-panel {
+  flex: 0 0 var(--map-width);
+  position: fixed;
+  height: calc(100vh - var(--stacked-offset)); /* fill remaining space under both headers */
+  top: var(--stacked-offset);
+  left: 0;
+  width: var(--map-width);
+  background-color: #add8e6;
+  border-right: 1px solid #ddd;
+  z-index: 200;
+}
+
+.map-sticky-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.map-visual {
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(45deg, #aadddd 25%, transparent 25%, transparent 75%, #aadddd 75%, #aadddd), repeating-linear-gradient(45deg, #aadddd 25%, #f0f8ff 25%, #f0f8ff 75%, #aadddd 75%, #aadddd);
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #005f73;
+  font-weight: bold;
+}
+
+.pin {
+  position: absolute;
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.mobile-view-toggle, .mobile-view-alert {
+  position: fixed;
+  left: 43%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 999px;
+  padding: 10px 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f1f1f;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 1200;
+  height: 50px;
+  width: 120px;
+}
+.mobile-view-alert{
+  left: 57% ;
+  background-color: rgb(255, 119, 0);
+  color: white;
+}
+
+.mobile-view-toggle .toggle-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.mobile-filters-container {
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  margin: 20px ;
+}
+
+.filter-button{
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: #ddd 1px solid;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+@media (max-width: 1000px) {
+  :host {
+    --topbar-height: 0px;
+    --map-width: 0px;
+  }
+
+  .main-container {
+    padding-top: 0;
+  }
+
+  .real-estate-header {
+    display: none;
+  }
+
+  .content-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .listings-panel {
+    max-width: 100%;
+    padding: 16px 16px 90px;
+  }
+
+  .map-panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: calc(100vh - 160px);
+    border-right: none;
+    display: none;
+  }
+
+  .main-container.mobile-view-map .map-panel {
+    display: block;
+  }
+
+  .main-container.mobile-view-map .listings-panel {
+    display: none;
+  }
+
+  .main-container.mobile-view-list .map-panel {
+    display: none;
+  }
+
+  .main-container.mobile-view-list .listings-panel {
+    display: block;
+  }
+
+  .mobile-view-toggle,.mobile-view-alert {
+    display: inline-flex;
+  }
+  .mobile-filters-container{
+    display: flex;
+  }
+  
+}

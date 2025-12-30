@@ -1,0 +1,37 @@
+<div class="price-content" [class.compact]="compact">
+  <div class="price-values" *ngIf="showValues">
+    <div class="price-box">
+      <span class="price-prefix" *ngIf="showPrefix && valuePrefix">{{ valuePrefix }}</span>
+      <span class="price-number">{{ formatValue(minValue) }}</span>
+    </div>
+    <span class="price-separator">-</span>
+    <div class="price-box">
+      <span class="price-prefix" *ngIf="showPrefix && valuePrefix">{{ valuePrefix }}</span>
+      <span class="price-number">{{ formatValueMax(maxValue) }}</span>
+    </div>
+  </div>
+  <div
+    class="price-slider"
+    [style.--min-percent]="minPercent + '%'"
+    [style.--max-percent]="maxPercent + '%'">
+    <div class="price-slider-track"></div>
+    <input
+      type="range"
+      class="price-slider-input price-slider-input-min"
+      [class.price-slider-input-adjustment]="maxLimit === 20000000"
+      [min]="minLimit"
+      [max]="maxLimit"
+      [step]="step"
+      [value]="minValue"
+      (input)="onMinInput($event)">
+    <input
+      type="range"
+      class="price-slider-input price-slider-input-max"
+      [class.price-slider-input-adjustment]="maxLimit === 20000000"
+      [min]="minLimit"
+      [max]="maxLimit"
+      [step]="step"
+      [value]="maxValue"
+      (input)="onMaxInput($event)">
+  </div>
+</div>

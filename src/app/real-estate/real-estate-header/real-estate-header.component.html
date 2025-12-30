@@ -1,0 +1,361 @@
+<header class="top-bar">
+  <div class="logo-area">
+    <span class="logo-icon">🏠</span>
+    <span class="brand-name">נדל"ן</span>
+  </div>
+
+  <div class="filters-scroll">
+    <div class="search-box">
+      <input type="text" placeholder="איזור, עיר שכונה או רחוב">
+    </div>
+
+    <div class="filter-wrapper">
+      <button class="filter-chip" [class.active]="activeFilter === 'listingType'" (click)="toggleFilter('listingType')" type="button">
+        <span class="chip-label">{{ listingTypeLabel }}</span>
+        <span class="chip-arrow" aria-hidden="true"></span>
+      </button>
+      <div class="dropdown-menu listing-type-modal" *ngIf="activeFilter === 'listingType'">
+        <div class="dropdown-content listing-type-content">
+          <button
+            type="button"
+            class="listing-type-option"
+            *ngFor="let opt of listingTypeOptions"
+            [class.active]="listingType === opt.id"
+            (click)="selectListingType(opt.id)">
+            <span class="listing-type-label">{{ opt.label }}</span>
+            <span class="listing-check">&#10003;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-wrapper">
+      <button class="filter-chip"  [class.active]="activeFilter === 'type'" (click)="toggleFilter('type')">
+        <span class="chip-label">{{ typeFilterButtonLabel }}</span>
+        <span class="chip-arrow" aria-hidden="true"></span>
+      </button>
+      <div class="dropdown-menu property-type-modal"  *ngIf="activeFilter === 'type'">
+        <div class="dropdown-header">
+          <span class="multi-note">ניתן לבחור מספר סוגים</span>
+        </div>
+        <div class="dropdown-content property-type-groups">
+          <div class="property-group" role="group" aria-label="דירות">
+            <label class="group-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.2 4.31v16.11h2v-3.5a1 1 0 011-1h4a1 1 0 011 1v3.5h2V3.54l-10 .77zm6.5 13.11h-3v3h3v-3zm-6.5 4.5h17V10.787a1 1 0 00-.858-.99L15.7 9.135V3a1 1 0 00-1.076-.997l-11 .846a1 1 0 00-.924.997V21.92h1.5zm11.5-1.5v-9.77l4 .571v9.2h-4zM6.2 11.5a.5.5 0 01.5-.5h.5a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-.5a.5.5 0 01-.5-.5v-2zm.5-5.58a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h.5a.5.5 0 00.5-.5v-2a.5.5 0 00-.5-.5h-.5zm4 5.58a.5.5 0 01.5-.5h.5a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-.5a.5.5 0 01-.5-.5v-2zm.5-5.58a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h.5a.5.5 0 00.5-.5v-2a.5.5 0 00-.5-.5h-.5z" fill="currentColor"></path>
+              </svg>
+              דירות
+            </label>
+            <div class="group-options">
+              <label
+                class="check-option"
+                *ngFor="let opt of propertyOptions['apartments']"
+                [class.active]="opt.selected">
+                <input
+                  type="checkbox"
+                  [checked]="opt.selected"
+                  (change)="toggleOption('apartments', opt.id)">
+                <span>{{ opt.label }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="property-group" role="group" aria-label="בתים">
+            <label class="group-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.14 3.505l-.168-.005-.163.01c-.43.042-.834.231-1.14.538l-6.621 6.619-.104.113c-.46.543-.567 1.3-.3 1.942l.062.134.072.128c.334.54.934.896 1.605.896h.324v1.423l-.002.1.003.037v3.178l.005.14A1.89 1.89 0 007.59 20.5h8.822l.14-.005.137-.015a1.891 1.891 0 001.606-1.862v-4.739h.324l.154-.005a1.887 1.887 0 001.585-1.152 1.89 1.89 0 00-.404-2.055l-6.62-6.62-.124-.113a1.882 1.882 0 00-1.07-.43zm-.146 1.552l-.06.008a.322.322 0 00-.112.048l-.048.04-6.62 6.62c-.107.108-.124.214-.068.349.047.113.116.176.226.194l.071.006h1.104a.781.781 0 01.772.681l.006.098v2.208l.002.028-.002.092v3.189c0 .161.107.288.257.318l.067.006h1.424v-3.633c0-.987.775-1.807 1.745-1.88l.14-.004h2.206c.987 0 1.806.774 1.879 1.744l.005.14v3.633h1.424a.316.316 0 00.317-.257l.007-.067V13.1a.782.782 0 01.681-.772l.098-.006h1.104c.152 0 .24-.064.296-.2.047-.113.043-.205-.021-.295l-.046-.053-6.621-6.62a.325.325 0 00-.169-.09l-.064-.007zm1.232 9.93h-2.45c-.198 0-.343.112-.376.272l-.007.072.007 3.61h3.216l-.007-3.61c0-.173-.12-.307-.302-.338l-.08-.007z" fill="currentColor"></path>
+              </svg>
+              בתים
+            </label>
+            <div class="group-options">
+              <label
+                class="check-option"
+                *ngFor="let opt of propertyOptions['houses']"
+                [class.active]="opt.selected">
+                <input
+                  type="checkbox"
+                  [checked]="opt.selected"
+                  (change)="toggleOption('houses', opt.id)">
+                <span>{{ opt.label }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="property-group" role="group" aria-label="אחר">
+            <label class="group-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.562 3.504a.75.75 0 00-1.124 0l-2 2.265-.066.087a.75.75 0 00-.122.41V8h-1.5V6.265a.75.75 0 00-.188-.496l-2-2.265a.75.75 0 00-1.124 0l-2 2.265-.066.087a.75.75 0 00-.122.41V8h-1.5V6.265a.75.75 0 00-.188-.496l-2-2.265a.75.75 0 00-1.124 0l-2 2.265a.75.75 0 00-.188.496V21c0 .414.336.75.75.75h4l.102-.007A.75.75 0 007.75 21v-2.5h1.5V21c0 .414.336.75.75.75h4l.102-.007A.75.75 0 0014.75 21v-2.5h1.5V21c0 .414.336.75.75.75h4a.75.75 0 00.75-.75V6.265a.75.75 0 00-.188-.496l-2-2.265zM3.75 6.548l1.249-1.415L6.25 6.549V20.25h-2.5V6.548zM12 5.133l-1.25 1.415V20.25h2.5V6.549L12 5.133zm5.75 1.415L19 5.133l1.25 1.416V20.25h-2.5V6.548zm-1.5 8.952h-1.5V17h1.5v-1.5zm-8.5 0h1.5V17h-1.5v-1.5zm8.5-3h-1.5V14h1.5v-1.5zm-8.5 0h1.5V14h-1.5v-1.5zm8.5-3h-1.5V11h1.5V9.5zm-8.5 0h1.5V11h-1.5V9.5z" fill="currentColor"></path>
+              </svg>
+              אחר
+            </label>
+            <div class="group-options">
+              <label
+                class="check-option"
+                *ngFor="let opt of propertyOptions['others']"
+                [class.active]="opt.selected">
+                <input
+                  type="checkbox"
+                  [checked]="opt.selected"
+                  (change)="toggleOption('others', opt.id)">
+                <span>{{ opt.label }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown-footer">
+          <button (click)="closeFilters()">אישור</button>
+          <span (click)="resetFilter()">איפוס</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-wrapper">
+      <button class="filter-chip"  [class.active]="activeFilter === 'rooms'" (click)="toggleFilter('rooms')">
+        <span class="chip-label">{{ roomsFilterButtonLabel }}</span>
+        <span class="chip-arrow" aria-hidden="true"></span>
+      </button>
+      <div class="dropdown-menu rooms-modal" *ngIf="activeFilter === 'rooms'">
+        <div class="dropdown-content">
+          <div class="rooms-selector">
+            <ng-container *ngFor="let room of roomsOptions; let i = index">
+            <button
+             type="button"
+             class="room-option"
+            [class.active]="isRoomSelected(room.value)"
+            [class.in-range]="isRoomInRange(room.value)"
+            [class.range-start]="isRoomRangeStart(room.value)"
+            [class.range-end]="isRoomRangeEnd(room.value)"
+             (click)="toggleRoom(room.value)"
+             >
+              {{ room.label }}
+           </button>
+          <span class="span" [class.span-in-range]=" isRoomInRange(room.value) &&
+           isRoomInRange(roomsOptions[i + 1].value)"></span>
+          </ng-container>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="filter-wrapper">
+      <button class="filter-chip" [class.active]="activeFilter === 'price'" (click)="toggleFilter('price')">
+        <span class="chip-label price-chip-label">{{ priceButtonLabel }}</span>
+        <span class="chip-arrow" aria-hidden="true"></span>
+      </button>
+      <div class="dropdown-menu price-modal" [hidden]="activeFilter !== 'price'">
+        <app-price-range
+          [defaultLabel]="priceFilterLabel"
+          [minPrefixLabel]="priceMinPrefixLabel"
+          [maxPrefixLabel]="priceMaxPrefixLabel"
+          (labelChange)="priceButtonLabel = $event">
+        </app-price-range>
+      </div>
+    </div>
+
+    <button class="filter-chip extra-filters" type="button" (click)="toggleFilter('extraFilters')">
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.72973 7.19595H13.8034C14.1211 6.07289 15.1536 5.25 16.3784 5.25C17.6031 5.25 18.6357 6.07289 18.9533 7.19595H20.2703C20.6733 7.19595 21 7.52266 21 7.92568C21 8.32869 20.6733 8.65541 20.2703 8.65541H18.9533C18.6357 9.77846 17.6031 10.6014 16.3784 10.6014C15.1536 10.6014 14.1211 9.77846 13.8034 8.65541H3.72973C3.32671 8.65541 3 8.32869 3 7.92568C3 7.52266 3.32671 7.19595 3.72973 7.19595ZM16.3784 6.70946C15.7067 6.70946 15.1622 7.25398 15.1622 7.92568C15.1622 8.59737 15.7067 9.14189 16.3784 9.14189C17.0501 9.14189 17.5946 8.59737 17.5946 7.92568C17.5946 7.25398 17.0501 6.70946 16.3784 6.70946Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M3.72973 14.9797C3.32671 14.9797 3 15.3064 3 15.7095C3 16.1125 3.32671 16.4392 3.72973 16.4392H6.01964C6.33728 17.5622 7.36984 18.3851 8.59459 18.3851C9.81935 18.3851 10.8519 17.5622 11.1696 16.4392H20.2703C20.6733 16.4392 21 16.1125 21 15.7095C21 15.3064 20.6733 14.9797 20.2703 14.9797H11.1696C10.8519 13.8567 9.81935 13.0338 8.59459 13.0338C7.36984 13.0338 6.33728 13.8567 6.01964 14.9797H3.72973ZM9.81081 15.7095C9.81081 15.0378 9.26629 14.4932 8.59459 14.4932C7.9229 14.4932 7.37838 15.0378 7.37838 15.7095C7.37838 16.3812 7.9229 16.9257 8.59459 16.9257C9.26629 16.9257 9.81081 16.3812 9.81081 15.7095Z" fill="currentColor"></path></svg>
+      <span class="extra-filters-count" *ngIf="extraFiltersCount > 0">{{ extraFiltersCount }}</span>
+      <span>סינונים נוספים</span>
+    </button>
+
+
+    <button class="search-btn">חיפוש</button>
+
+    <div class="actions">
+      <button class="alert-btn"> יצירת התראה</button>
+    </div>
+  </div>
+</header>
+
+<div class="extra-filters-overlay" *ngIf="activeFilter === 'extraFilters'" (click)="closeFilters()">
+  <div class="extra-filters-modal" (click)="$event.stopPropagation()">
+    <div class="extra-filters-header">
+      <button class="extra-filters-close" type="button" (click)="closeFilters()">×</button>
+      <span class="extra-filters-title">סינונים נוספים</span>
+    </div>
+    <div class="extra-filters-body">
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">מאפייני מודעה</h4>
+        <div class="extra-checkbox-grid">
+          <label class="extra-checkbox" *ngFor="let opt of extraAdOptions">
+            <input type="checkbox" [checked]="opt.selected" (change)="toggleExtraOption(opt)">
+            <span>{{ opt.label }}</span>
+            <span class="extra-tag" *ngIf="opt.tag">{{ opt.tag }}</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">מי המפרסם</h4>
+        <div class="extra-checkbox-grid">
+          <label class="extra-checkbox" *ngFor="let opt of extraPublisherOptions">
+            <input type="checkbox" [checked]="opt.selected" (change)="toggleExtraOption(opt)">
+            <span>{{ opt.label }}</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">מאפייני הנכס</h4>
+        <div class="feature-grid">
+          <button
+            type="button"
+            class="feature-button"
+            *ngFor="let opt of extraPropertyFeatures"
+            [class.active]="opt.selected"
+            (click)="toggleExtraOption(opt)">
+            <span class="feature-icon">{{ opt.icon }}</span>
+            <span class="feature-label">{{ opt.label }}</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">מצב הנכס</h4>
+        <div class="extra-checkbox-list">
+          <label class="extra-checkbox" *ngFor="let opt of extraPropertyState">
+            <input type="checkbox" [checked]="opt.selected" (change)="toggleExtraOption(opt)">
+            <span>{{ opt.label }}</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">קומה</h4>
+        <div class="range-inputs">
+          <div class="range-select" [class.open]="activeExtraSelect === 'floorMax'">
+            <button type="button" class="range-select-button" (click)="toggleExtraSelect('floorMax')">
+              <span class="range-select-label">{{ floorMaxDisplayLabel }}</span>
+              <span class="range-select-arrow" aria-hidden="true"></span>
+            </button>
+            <div class="range-select-menu" *ngIf="activeExtraSelect === 'floorMax'">
+              <button
+                type="button"
+                class="range-select-option"
+                [class.selected]="floorMaxValue === null"
+                (click)="setFloorMaxValue(null)">
+                <span class="range-select-label">+20</span>
+                <span class="range-select-check">&#10003;</span>
+              </button>
+              <button
+                type="button"
+                class="range-select-option"
+                *ngFor="let level of floorLevels"
+                [class.selected]="floorMaxValue === level"
+                (click)="setFloorMaxValue(level)">
+                <span class="range-select-label">{{ level === 0 ? 'קרקע' : (level === floorMaxLimit ? '20+' : level) }}</span>
+                <span class="range-select-check">&#10003;</span>
+              </button>
+            </div>
+          </div>
+          <span class="range-separator">-</span>
+          <div class="range-select" [class.open]="activeExtraSelect === 'floorMin'">
+            <button type="button" class="range-select-button" (click)="toggleExtraSelect('floorMin')">
+              <span class="range-select-label">{{ floorMinDisplayLabel }}</span>
+              <span class="range-select-arrow" aria-hidden="true"></span>
+            </button>
+            <div class="range-select-menu" *ngIf="activeExtraSelect === 'floorMin'">
+              <button
+                type="button"
+                class="range-select-option"
+                [class.selected]="floorMinValue === null"
+                (click)="setFloorMinValue(null)">
+                <span class="range-select-label">מתוך</span>
+                <span class="range-select-check">&#10003;</span>
+              </button>
+              <button
+                type="button"
+                class="range-select-option"
+                [class.selected]="floorMinValue === -1"
+                (click)="setFloorMinValue(-1)">
+                <span class="range-select-label">מרתף</span>
+                <span class="range-select-check">&#10003;</span>
+              </button>
+              <button
+                type="button"
+                class="range-select-option"
+                *ngFor="let level of floorLevels"
+                [class.selected]="floorMinValue === level"
+                (click)="setFloorMinValue(level)">
+                <span class="range-select-label">{{ level === 0 ? 'קרקע' : level }}</span>
+                <span class="range-select-check">&#10003;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+          <app-price-range
+            [minLimit]="floorMinLimit"
+            [maxLimit]="floorMaxLimit"
+            [step]="floorStep"
+            [defaultMin]="floorMinLimit"
+            [defaultMax]="floorMaxLimit"
+            [valueMin]="floorMinSlider"
+            [valueMax]="floorMaxSlider"
+            [showValues]="false"
+            [showPrefix]="false"
+            [compact]="true"
+            (rangeChange)="onFloorRangeChange($event)">
+          </app-price-range>
+        </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">גודל דירה (במ"ר)</h4>
+        <app-price-range
+          [minLimit]="apartmentSizeMinLimit"
+          [maxLimit]="apartmentSizeMaxLimit"
+          [step]="apartmentSizeStep"
+          [defaultMin]="apartmentSizeMinLimit"
+          [defaultMax]="apartmentSizeMaxLimit"
+          [valueMin]="apartmentSizeMin"
+          [valueMax]="apartmentSizeMax"
+          [showPrefix]="false"
+          [compact]="true"
+          (rangeChange)="onApartmentSizeRangeChange($event)">
+        </app-price-range>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">מ"ר בנוי</h4>
+        <app-price-range
+          [minLimit]="builtAreaMinLimit"
+          [maxLimit]="builtAreaMaxLimit"
+          [step]="builtAreaStep"
+          [defaultMin]="builtAreaMinLimit"
+          [defaultMax]="builtAreaMaxLimit"
+          [valueMin]="builtAreaMin"
+          [valueMax]="builtAreaMax"
+          [showPrefix]="false"
+          [compact]="true"
+          (rangeChange)="onBuiltAreaRangeChange($event)">
+        </app-price-range>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">תאריך כניסה</h4>
+        <div class="entry-date-row">
+            <div class="entry-date-input">
+            <input [disabled]="entryImmediate" type="date" [value]="entryDate" (change)="onEntryDateChange($event)">
+          </div>
+          <label class="extra-checkbox entry-checkbox">
+            <input type="checkbox" [checked]="entryImmediate" (change)="entryImmediate = !entryImmediate; entryDate = '';">
+            <span>כניסה מיידית</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="extra-filters-section">
+        <h4 class="extra-section-title">חיפוש חופשי</h4>
+        <input
+          type="text"
+          class="free-text-input"
+          placeholder="טקסט חופשי"
+          [value]="freeText"
+          (input)="onFreeTextInput($event)">
+      </section>
+    </div>
+    <div class="extra-filters-footer">
+      <button class="extra-reset" type="button" (click)="resetExtraFilters()">איפוס</button>
+      <button class="extra-apply" type="button" (click)="closeFilters()">אישור</button>
+    </div>
+  </div>
+</div>

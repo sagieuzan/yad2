@@ -1,0 +1,10 @@
+<app-master-header (sideMenuToggle)="toggleSideMenu()"></app-master-header>
+
+<app-side-menu 
+  [open]="sideMenuOpen"
+  (close)="toggleSideMenu()">
+</app-side-menu>
+
+<div class="layout-content">
+  <router-outlet></router-outlet>
+</div>

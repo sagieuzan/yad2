@@ -1,0 +1,77 @@
+<div
+  class="main-container"
+  dir="rtl"
+  [class.mobile-view-map]="mobileView === 'map'"
+  [class.mobile-view-list]="mobileView === 'list'">
+
+  <div class="real-estate-header">
+    <app-real-estate-header></app-real-estate-header>
+  </div>
+
+  <div class="content-wrapper">
+    
+    <div class="listings-panel">
+      
+      <div class="listings-header">
+        <h1>נדל"ן למכירה</h1>
+        <span class="subtitle">{{properties.length}} תוצאות</span>
+      </div>
+      
+      <div class="mobile-filters-container">
+        <button class="filter-button">
+          <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.439 18.34a.75.75 0 01-.75.75H4.75a.75.75 0 010-1.5H7.69a.75.75 0 01.75.75zM20.192 18.34a.75.75 0 01-.75.75h-8.08a.75.75 0 010-1.5h8.08a.75.75 0 01.75.75zM13.58 12.463a.75.75 0 01-.75.75H4.75a.75.75 0 010-1.5h8.08a.75.75 0 01.75.75zM20.192 12.463a.75.75 0 01-.75.75h-2.938a.75.75 0 010-1.5h2.938a.75.75 0 01.75.75zM8.11 6.587a.75.75 0 01-.75.75H4.75a.75.75 0 010-1.5h2.61a.75.75 0 01.75.75zM20.192 6.587a.75.75 0 01-.75.75h-8.08a.75.75 0 010-1.5h8.08a.75.75 0 01.75.75z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10.612 18.34a1.087 1.087 0 10-2.174 0 1.087 1.087 0 002.174 0zm-1.087-2.586a2.587 2.587 0 110 5.173 2.587 2.587 0 010-5.173zM15.754 12.463a1.087 1.087 0 10-2.173 0 1.087 1.087 0 002.173 0zm-1.087-2.586a2.587 2.587 0 110 5.173 2.587 2.587 0 010-5.173zM10.612 6.587a1.087 1.087 0 10-2.173 0 1.087 1.087 0 002.173 0zM9.525 4a2.587 2.587 0 110 5.173 2.587 2.587 0 010-5.173z" fill="currentColor"></path></svg>
+          <span>סינונים</span>
+        </button>
+        <button  class="filter-button">
+          <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="pseudo-sort-button-gray_icon__M2_ap"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.944 4.71a.75.75 0 00-1.495.08l-.19 13.28-1.79-1.434-.092-.063a.75.75 0 00-.846 1.234l2.971 2.38.095.064a.75.75 0 00.837-.06l3.03-2.38.082-.075a.75.75 0 00-1.01-1.104L8.76 18.027l.19-13.216-.005-.101zm7.554-.495l-.095-.064-.1-.049a.75.75 0 00-.737.109l-3.03 2.38-.081.075a.75.75 0 00-.045.978l.075.082a.75.75 0 00.978.044l1.777-1.396-.19 13.217.006.101a.75.75 0 001.495-.08l.189-13.281 1.791 1.435.092.063a.75.75 0 00.846-1.234l-2.971-2.38z" fill="currentColor"></path></svg>
+                 <span>לפי תאריך</span>
+         </button>
+        
+      </div>
+
+      <div class="property-card" *ngFor="let item of properties">
+        <div class="card-image">
+          <img [src]="item.imageUrl" [alt]="item.address">
+          <span *ngIf="item.isNewProject" class="tag-new">פרויקט חדש</span>
+          <button class="like-btn">♡</button>
+        </div>
+
+        <div class="card-details">
+          <div class="address-row">
+            <span class="street">{{ item.address }}</span>
+          </div>
+          <div class="city-row">
+            {{ item.type }}, {{ item.city }}
+          </div>
+          
+          <div class="specs-row">
+            <div class="spec-item"><strong>{{ item.rooms }}</strong><span>חדרים</span></div>
+            <div class="spec-item"><strong>{{ item.floor }}</strong><span>קומה</span></div>
+            <div class="spec-item"><strong>{{ item.sqm }}</strong><span>מ"ר</span></div>
+          </div>
+
+          <div class="price-row">₪ {{ item.price | number }}</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="map-panel">
+      <div class="map-sticky-container">
+        <div class="map-visual">
+         
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="mobile-view-toggle" type="button" (click)="toggleMobileView()">
+   <svg style="color:rgb(255, 119, 0) ;" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="map-actions_mapIcon__ABXQE"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.682 3.336l4.985 2.492 4.998-2.499A.75.75 0 0120.75 4v13.333a.75.75 0 01-.414.671l-5.334 2.667a.749.749 0 01-.671 0l-4.998-2.5-4.998 2.5A.75.75 0 013.25 20V6.667a.75.75 0 01.415-.671l5.32-2.66a.75.75 0 01.697 0zM8.583 5.214V16.87L4.75 18.786V7.13l3.833-1.916zm1.5 11.656l3.833 1.916V7.13l-3.833-1.916V16.87zm5.334-9.74v11.657l3.833-1.917V5.214L15.417 7.13z" fill="currentColor"></path></svg>
+    <span>{{ mobileView === 'map' ? 'רשימה' : 'מפה' }}</span>
+  </button>
+  <button class="mobile-view-alert" type="button">
+   <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="create-alert-button_alertInactiveIcon__V557R"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.55 15.542c.043-.14.086-.298.128-.475a2.223 2.223 0 001.473.428 9.46 9.46 0 01-.2.694h10.04l-.009-.027c-.29-.898-.555-2.377-.555-4.81a4.28 4.28 0 00-1.297-3.06A4.479 4.479 0 0012 7.023c-.49 0-.97.079-1.425.23a1.533 1.533 0 01-1.281-1.095 6.059 6.059 0 011.842-.574V4.75c0-.414.344-.75.767-.75.424 0 .767.336.767.75v.81a6.016 6.016 0 013.545 1.67 5.764 5.764 0 011.746 4.122c0 2.339.255 3.653.484 4.356.113.35.217.54.274.629.02.03.034.048.04.056a.738.738 0 01.197.795.766.766 0 01-.723.5h-3.31a.731.731 0 01-.03.197 2.944 2.944 0 01-1.083 1.527 3.05 3.05 0 01-1.803.588 3.05 3.05 0 01-1.802-.588c-.52-.381-.9-.917-1.083-1.527a.736.736 0 01-.031-.196H5.767a.769.769 0 01-.69-.422.736.736 0 01.087-.793c.015-.023.043-.07.08-.143.076-.146.19-.4.307-.79zm5.133 2.147c.103.205.254.385.442.523a1.493 1.493 0 001.764 0c.189-.138.34-.318.442-.523h-2.648zM7 13.5a.75.75 0 01-.75-.75v-2h-2a.75.75 0 010-1.5h2v-2a.75.75 0 011.5 0v2h2a.75.75 0 010 1.5h-2v2a.75.75 0 01-.75.75z" fill="currentColor"></path></svg>
+    <span>התראה</span>
+ </button>
+</div>
