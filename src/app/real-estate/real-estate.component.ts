@@ -9,6 +9,7 @@ import { RealEstateHeaderComponent } from './real-estate-header/real-estate-head
 })
 export class RealEstateComponent {
   mobileView: 'list' | 'map' = 'list';
+  mobileFiltersOpen = false;
   properties = [
     {
       id: 1,
@@ -74,5 +75,9 @@ export class RealEstateComponent {
 
   toggleMobileView() {
     this.mobileView = this.mobileView === 'map' ? 'list' : 'map';
+  }
+
+  openMobileFilters() {
+    this.mobileFiltersOpen = true;
   }
 }

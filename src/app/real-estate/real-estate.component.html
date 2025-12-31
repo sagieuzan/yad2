@@ -5,7 +5,9 @@
   [class.mobile-view-list]="mobileView === 'list'">
 
   <div class="real-estate-header">
-    <app-real-estate-header></app-real-estate-header>
+    <app-real-estate-header
+      [mobileFiltersOpen]="mobileFiltersOpen"
+      (mobileFiltersOpenChange)="mobileFiltersOpen = $event"></app-real-estate-header>
   </div>
 
   <div class="content-wrapper">
@@ -18,7 +20,7 @@
       </div>
       
       <div class="mobile-filters-container">
-        <button class="filter-button">
+        <button class="filter-button" type="button" (click)="openMobileFilters()">
           <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.439 18.34a.75.75 0 01-.75.75H4.75a.75.75 0 010-1.5H7.69a.75.75 0 01.75.75zM20.192 18.34a.75.75 0 01-.75.75h-8.08a.75.75 0 010-1.5h8.08a.75.75 0 01.75.75zM13.58 12.463a.75.75 0 01-.75.75H4.75a.75.75 0 010-1.5h8.08a.75.75 0 01.75.75zM20.192 12.463a.75.75 0 01-.75.75h-2.938a.75.75 0 010-1.5h2.938a.75.75 0 01.75.75zM8.11 6.587a.75.75 0 01-.75.75H4.75a.75.75 0 010-1.5h2.61a.75.75 0 01.75.75zM20.192 6.587a.75.75 0 01-.75.75h-8.08a.75.75 0 010-1.5h8.08a.75.75 0 01.75.75z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10.612 18.34a1.087 1.087 0 10-2.174 0 1.087 1.087 0 002.174 0zm-1.087-2.586a2.587 2.587 0 110 5.173 2.587 2.587 0 010-5.173zM15.754 12.463a1.087 1.087 0 10-2.173 0 1.087 1.087 0 002.173 0zm-1.087-2.586a2.587 2.587 0 110 5.173 2.587 2.587 0 010-5.173zM10.612 6.587a1.087 1.087 0 10-2.173 0 1.087 1.087 0 002.173 0zM9.525 4a2.587 2.587 0 110 5.173 2.587 2.587 0 010-5.173z" fill="currentColor"></path></svg>
           <span>סינונים</span>
         </button>
