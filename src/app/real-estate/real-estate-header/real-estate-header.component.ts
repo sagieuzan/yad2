@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PriceRangeComponent } from '../price-range/price-range.component';
 import { PropertyOption } from '../interfaces/property-option';
@@ -13,9 +13,13 @@ import { ToggleOption } from '../interfaces/toggle-option';
 export class RealEstateHeaderComponent {
   constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
 
+  @Input() mobileFiltersOpen = false;
+  @Output() mobileFiltersOpenChange = new EventEmitter<boolean>();
+
   activeFilter: string | null = null;
   activeExtraSelect: 'floorMin' | 'floorMax' | null = null;
   filtersCount: number = 0;
+  locationQuery = '';
   typeFilterDefaultLabel = 'סוג הנכס';
   typeFilterButtonLabel = 'סוג הנכס';
   roomsFilterDefaultLabel = 'חדרים';
@@ -28,6 +32,8 @@ export class RealEstateHeaderComponent {
   priceMinPlaceholder = 'ממחיר';
   priceMaxPlaceholder = 'עד מחיר';
   priceApplyLabel = 'סינון';
+  priceMinValue: number | null = null;
+  priceMaxValue: number | null = null;
   listingType = 'sale';
   listingTypeLabel = 'מכירה';
   listingTypeOptions = [
@@ -148,6 +154,12 @@ export class RealEstateHeaderComponent {
     this.activeExtraSelect = null;
   }
 
+  closeMobileFilters() {
+    this.closeFilters();
+    this.mobileFiltersOpen = false;
+    this.mobileFiltersOpenChange.emit(false);
+  }
+
   get extraFiltersCount(): number {
     let count = 0;
     if (this.extraAdOptions.some(option => option.selected)) count++;
@@ -172,7 +184,7 @@ export class RealEstateHeaderComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (!this.activeFilter) return;
+    if (!this.activeFilter && !this.activeExtraSelect) return;
     if (!(event.target instanceof Element)) {
       this.activeFilter = null;
       return;
@@ -184,14 +196,14 @@ export class RealEstateHeaderComponent {
       return;
     }
 
-    const clickedInsideMenu = event.target.closest('.dropdown-menu, .extra-filters-modal');
+    const clickedInsideMenu = event.target.closest('.dropdown-menu, .extra-filters-modal, .mobile-filters-modal');
     const clickedOnChip = event.target.closest('.filter-chip');
     if (!clickedInsideMenu && !clickedOnChip) {
       this.activeFilter = null;
       this.activeExtraSelect = null;
     }
 
-    if (this.activeFilter === 'extraFilters') {
+    if (this.activeFilter === 'extraFilters' || this.mobileFiltersOpen) {
       const clickedOnSelect = event.target.closest('.range-select');
       if (!clickedOnSelect) {
         this.activeExtraSelect = null;
@@ -273,6 +285,19 @@ export class RealEstateHeaderComponent {
       return;
     }
     this.freeText = target.value;
+  }
+
+  onLocationInput(event: Event) {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+    this.locationQuery = target.value;
+  }
+
+  onPriceRangeChange(range: { min: number; max: number }) {
+    this.priceMinValue = range.min;
+    this.priceMaxValue = range.max;
   }
 
   resetExtraFilters() {
